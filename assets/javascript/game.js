@@ -1,27 +1,27 @@
 $(document).ready(function () {
     var characters = {
-        "Grievous": {
+        "grievous": {
             "HealthPoints": 120,
             "AttackPower": 10,
             "CAPower": 7,
             "CurrHP": 120,
             "CurrAPower": 10
         },
-        "Ackbar": {
+        "ackbar": {
             "HealthPoints": 80,
             "AttackPower": 8,
             "CAPower": 3,
             "CurrHP": 80,
             "CurrAPower": 8
         },
-        "BobaFett": {
+        "bobafett": {
             "HealthPoints": 110,
             "AttackPower": 8,
             "CAPower": 7,
             "CurrHP": 110,
             "CurrAPower": 8
         },
-        "MaceWindu": {
+        "windu": {
             "HealthPoints": 140,
             "AttackPower": 12,
             "CAPower": 10,
@@ -32,5 +32,23 @@ $(document).ready(function () {
 
     var currCharacter = '';
 
+    var enemyCharacter = '';
 
+    var numEnemies = characters.length - 1;
+
+    $('.characterCard').on("click", function () {
+        if (currCharacter.length == 0 && enemyCharacter.length == 0) {
+            currCharacter = this.id;
+            console.log(currCharacter);
+        } else if (currCharacter.length > 0 && enemyCharacter.length == 0) {
+            enemyCharacter = this.id;
+            console.log(enemyCharacter);
+        }
+    })
+
+    $('#attack').on("click", function () {
+        if (characters[currCharacter]["currHP"] <= 0 || numEnemies == 0) {
+            $('#restart')
+        }
+    })
 })
