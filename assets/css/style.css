@@ -1,0 +1,25 @@
+body {
+    background-image: url("../images/background.jpg");
+    background-size: cover;
+    color: white;
+}
+
+h1 {
+    font-size: 60px;
+    text-align: right;
+}
+
+img {
+    height: 100px;
+    width: 100px;
+    padding: 5px 0px 5px 0px;
+}
+
+.characterCard {
+    border: 2px solid green;
+    width: 150px;
+    text-align: center;
+    float: left;
+    background-color: white;
+    color: black;
+}
