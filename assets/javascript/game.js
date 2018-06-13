@@ -36,6 +36,8 @@ $(document).ready(function () {
 
     var numEnemies = characters.length - 1;
 
+    $('#restart').hide()
+
     $('.characterCard').on("click", function () {
         if (currCharacter.length == 0 && enemyCharacter.length == 0) {
             currCharacter = this.id;
@@ -48,7 +50,13 @@ $(document).ready(function () {
 
     $('#attack').on("click", function () {
         if (characters[currCharacter]["currHP"] <= 0 || numEnemies == 0) {
-            $('#restart')
+            $('#restart').show();
         }
+    })
+
+    $('#restart').on("click", function () {
+        currCharacter = '';
+        enemyCharacter = '';
+        numEnemies = characters.length - 1;
     })
 })
