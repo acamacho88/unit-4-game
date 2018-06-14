@@ -24,6 +24,11 @@ img {
     color: black;
 }
 
+.mainCharacter {
+    background-color: lightblue;
+    border: 2px solid blue;
+}
+
 .enemies {
     background-color: red;
     color: black;

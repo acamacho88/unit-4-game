@@ -1,6 +1,7 @@
 $(document).ready(function () {
     var characters = {
         "grievous": {
+            "Name": "General Grievous",
             "HealthPoints": 120,
             "AttackPower": 10,
             "CAPower": 7,
@@ -8,6 +9,7 @@ $(document).ready(function () {
             "CurrAPower": 10
         },
         "ackbar": {
+            "Name": "Admiral Ackbar",
             "HealthPoints": 80,
             "AttackPower": 8,
             "CAPower": 3,
@@ -15,6 +17,7 @@ $(document).ready(function () {
             "CurrAPower": 8
         },
         "bobafett": {
+            "Name": "Boba Fett",
             "HealthPoints": 110,
             "AttackPower": 8,
             "CAPower": 7,
@@ -22,6 +25,7 @@ $(document).ready(function () {
             "CurrAPower": 8
         },
         "windu": {
+            "Name": "Mace Windu",
             "HealthPoints": 140,
             "AttackPower": 12,
             "CAPower": 10,
@@ -34,29 +38,69 @@ $(document).ready(function () {
 
     var enemyCharacter = '';
 
-    var numEnemies = characters.length - 1;
+    var numEnemies = Object.keys(characters).length - 1;
 
     $('#restart').hide()
 
     $('.characterCard').on("click", function () {
         if (currCharacter.length == 0 && enemyCharacter.length == 0) {
             currCharacter = this.id;
-            console.log(currCharacter);
-        } else if (currCharacter.length > 0 && enemyCharacter.length == 0) {
+            $('#' + currCharacter).addClass('mainCharacter');
+            Object.keys(characters).forEach(element => {
+                if (element != currCharacter) {
+                    $('#' + element).addClass('enemies');
+                }
+            })
+        } else if (currCharacter.length > 0 && enemyCharacter.length == 0 && this.id !== currCharacter) {
             enemyCharacter = this.id;
-            console.log(enemyCharacter);
+            $('#' + enemyCharacter).addClass('enemy');
         }
     })
 
-    $('#attack').on("click", function () {
-        if (characters[currCharacter]["currHP"] <= 0 || numEnemies == 0) {
+    var attackIncrement = function () {
+        characters[currCharacter]["CurrHP"] -= characters[enemyCharacter]["CAPower"];
+        characters[enemyCharacter]["CurrHP"] -= characters[currCharacter]["CurrAPower"];
+        characters[currCharacter]["CurrAPower"] += characters[currCharacter]["AttackPower"];
+        redrawCard(currCharacter);
+        redrawCard(enemyCharacter);
+        if (characters[enemyCharacter]["CurrHP"] <= 0 && characters[currCharacter]["CurrHP"] > 0 && numEnemies > 1) {
+            $('#statusMsg').text("You have defeated " + characters[enemyCharacter]["Name"] + ", you can choose to fight another enemy.");
+            numEnemies -= 1;
+            $('#' + enemyCharacter).hide();
+            enemyCharacter = '';
+        } else if (characters[enemyCharacter]["CurrHP"] <= 0 && numEnemies == 1) {
+            $('#statusMsg').text("You have conquered all of your enemies!");
+            $('#' + enemyCharacter).hide();
             $('#restart').show();
+        } else if (characters[currCharacter]["CurrHP"] <= 0) {
+            $('#statusMsg').text('You have been killed! Press Restart to try again. I mean, to do or do not again.');
+            $('#restart').show();
+        }
+    }
+
+    var redrawCard = function (character) {
+        $('#' + character + " .hitPoints").text(characters[character]["CurrHP"]);
+
+        // $('#' + enemyCharacter + " .hitPoints").text(characters[enemyCharacter]["CurrHP"]);
+    }
+
+    $('#attack').on("click", function () {
+        if (characters[currCharacter]["CurrHP"] > 0 && characters[enemyCharacter]["CurrHP"] > 0) {
+            attackIncrement();
         }
     })
 
     $('#restart').on("click", function () {
+        Object.keys(characters).forEach(element => {
+            characters[element]["CurrHP"] = characters[element]["HealthPoints"];
+            characters[element]["CurrAPower"] = characters[element]["AttackPower"];
+            redrawCard(element);
+            $('#' + element).show();
+            $('#' + element).attr('class', 'characterCard');
+        });
         currCharacter = '';
         enemyCharacter = '';
-        numEnemies = characters.length - 1;
+        numEnemies = Object.keys(characters).length - 1;
+        $('#restart').hide();
     })
 })
