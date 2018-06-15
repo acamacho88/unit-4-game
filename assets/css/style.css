@@ -11,6 +11,7 @@ h1 {
 
 h2 {
     font-size: 30px;
+    clear: both;
 }
 
 #underContent {
@@ -47,4 +48,8 @@ img {
     background-color: black;
     color: white;
     border: 2px solid green;
+}
+
+#statusMsg {
+    clear: both;
 }

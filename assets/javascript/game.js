@@ -57,9 +57,11 @@ $(document).ready(function () {
                     $('#enemiesAvailable').append($('#' + element));
                 }
             })
+            $('#introHeader').hide();
         } else if (currCharacter.length > 0 && enemyCharacter.length == 0 && this.id !== currCharacter) {
             enemyCharacter = this.id;
             $('#' + enemyCharacter).addClass('enemy');
+            $('#defender').append(this);
         }
     })
 
