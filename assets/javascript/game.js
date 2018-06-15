@@ -51,6 +51,12 @@ $(document).ready(function () {
                     $('#' + element).addClass('enemies');
                 }
             })
+            $('#yourCharacter').append(this);
+            Object.keys(characters).forEach(element => {
+                if (element !== currCharacter) {
+                    $('#enemiesAvailable').append($('#' + element));
+                }
+            })
         } else if (currCharacter.length > 0 && enemyCharacter.length == 0 && this.id !== currCharacter) {
             enemyCharacter = this.id;
             $('#' + enemyCharacter).addClass('enemy');
@@ -97,6 +103,7 @@ $(document).ready(function () {
             redrawCard(element);
             $('#' + element).show();
             $('#' + element).attr('class', 'characterCard');
+            $('#characterList').append($('#' + element));
         });
         currCharacter = '';
         enemyCharacter = '';

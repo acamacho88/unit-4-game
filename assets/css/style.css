@@ -9,6 +9,14 @@ h1 {
     text-align: right;
 }
 
+h2 {
+    font-size: 30px;
+}
+
+#underContent {
+    clear: both;
+}
+
 img {
     height: 100px;
     width: 100px;
